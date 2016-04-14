@@ -21,7 +21,7 @@ root = File.expand_path './public'
 server = WEBrick::HTTPServer.new Port: port, DocumentRoot: root
 
 server.mount_proc '/api/comments' do |req, res|
-  comments = JSON.parse(File.read('./comments.json', encoding: 'UTF-8'))
+  comments = JSON.parse(File.read('./public/api/comments.json', encoding: 'UTF-8'))
 
   if req.request_method == 'POST'
     # Assume it's well formed
@@ -31,7 +31,7 @@ server.mount_proc '/api/comments' do |req, res|
     end
     comments << comment
     File.write(
-      './comments.json',
+      './public/api/comments.json',
       JSON.pretty_generate(comments, indent: '    '),
       encoding: 'UTF-8'
     )
